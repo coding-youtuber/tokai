@@ -1,0 +1,25 @@
+[project]
+name = "103-all-thumbnails"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "naoyashiga", email = "" }
+]
+dependencies = [
+    "requests>=2.27.1",
+    "Pillow>=8.4.0",
+    "youtube-comment-downloader>=0.1.68",
+]
+readme = "README.md"
+requires-python = ">= 3.6"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
