@@ -13,4 +13,4 @@ logs
 *.jpg
 *.jpeg
 *.mp4
-comments/*.json
+**/comments/*.json
