@@ -26,6 +26,14 @@ type CommentJSON = {
   comments: Comment[];
 };
 
+// 万を数値に変換する関数
+function convertVotes(votes: string): number {
+  if (votes.includes('万')) {
+    return parseFloat(votes.replace('万', '')) * 10000;
+  }
+  return parseInt(votes);
+}
+
 async function processCommentsJSON(filePath: string, videoId: string) {
   try {
     const data = await fs.promises.readFile(filePath, 'utf-8');
@@ -35,7 +43,7 @@ async function processCommentsJSON(filePath: string, videoId: string) {
       const commentData = {
         ...comment,
         time_parsed_date: comment.time_parsed ? new Date(comment.time_parsed * 1000) : undefined,
-        votes_int: parseInt(comment.votes),
+        votes_int: convertVotes(comment.votes),
         video_id: videoId,
       };
       const exists = await prisma.comment.findUnique({ where: { cid: comment.cid } });
