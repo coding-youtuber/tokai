@@ -1,14 +1,23 @@
 import os
 import concurrent.futures
-from download import download_comments as dc
+from library import download_comments as dc
 
 # 定数化された設定
 VIDEO_ID_FILE_PATH = "../comments-to-db/error_unique_video_ids.txt"  # ビデオIDのリストを含むファイルのパス
 # VIDEO_ID_FILE_PATH = "output.txt"  # ビデオIDのリストを含むファイルのパス
 RE_DOWNLOAD = True  # 再ダウンロードを行う場合はTrueに設定
+SUCCESSFUL_VIDEO_IDS_FILE = "logs/success/video_ids.txt"  # 成功したビデオIDを保存するファイルのパス
 
 # YouTube動画のコメントをダウンロードする関数
 def download_comments(video_id):
+    # 成功したビデオIDを読み込む
+    with open(SUCCESSFUL_VIDEO_IDS_FILE, 'r') as f:
+        successful_video_ids = f.read().splitlines()
+        
+    # 既に成功したビデオIDに対するダウンロードはスキップする
+    if video_id in successful_video_ids:
+        return video_id, -2
+    
     # ダウンロードしたコメントを保存するJSONファイルのパスを設定します
     output_json_path = f"comments/{video_id}.json"
     
@@ -18,7 +27,14 @@ def download_comments(video_id):
 
     # download_comments関数（外部ライブラリに含まれている）を呼び出してコメントをダウンロードします
     result = dc(youtube_id=video_id, output=output_json_path, pretty=True)
+    
+    if result == 0:
+        # 成功したビデオIDをファイルに書き込む
+        with open(SUCCESSFUL_VIDEO_IDS_FILE, 'a') as f:
+            f.write(video_id + '\n')
+            
     return video_id, result
+
 
 # 順番にコメントをダウンロードする関数
 def download_in_sequence(video_ids):
@@ -57,6 +73,8 @@ def print_progress(video_id, result, completed_videos, total_videos):
         print(f"Successfully downloaded comments for video {video_id}")
     elif result == -1:
         print(f"Skipped video {video_id} (already downloaded)")
+    elif result == -2:
+        print(f"Skipped video {video_id} (already successfully downloaded)")
     else:
         print(f"Failed to download comments for video {video_id}")
     
