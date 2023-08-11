@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 
-const inputFile = 'input.txt';
+const inputFile = 'input2.txt';
 const outputFile = 'output.srt';
 
-const speed = 38 / 7;  // 38文字で7秒
+const speed = 38 / 8.2;  // 38文字で7秒
 const startTime = { hours: 0, minutes: 4, seconds: 9, milliseconds: 10 };
 
 function timeToString(time: { hours: number, minutes: number, seconds: number, milliseconds: number }) {
@@ -36,7 +36,15 @@ let currentStartTime = startTime;
 let outputContent = '';
 
 for (const line of lines) {
-    let duration = line.length / speed;
+    // アルファベットの文字数を2で割る
+    const adjustedLength = [...line].reduce((count, char) => {
+        if (/[a-zA-Z]/.test(char)) {
+            return count + 0.5;  // 2文字で1文字としてカウント
+        }
+        return count + 1;
+    }, 0);
+
+    let duration = adjustedLength / speed;
     let endTime = addTime(currentStartTime, duration);
 
     outputContent += `${currentNumber}\n`;
