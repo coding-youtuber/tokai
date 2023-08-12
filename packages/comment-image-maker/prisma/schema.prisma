@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Comment {
+  cid               String    @id
+  video_id          String    @map("video_id")
+  text              String    @db.VarChar(4000)
+  author_handle     String
+  author_channel_id String    @map("author_channel_id") // 修正されたフィールド
+  votes             Int
+  heart             Boolean
+  reply             Boolean
+  time_parsed       DateTime?
+
+  Video         Video   @relation(fields: [video_id], references: [video_id])
+  AuthorChannel Channel @relation("AuthorChannelToComment", fields: [author_channel_id], references: [channel_id]) // 修正されたリレーション
+
+  @@index([author_channel_id]) // 修正されたインデックス
+  @@index([video_id])
+}
+
+model Video {
+  video_id     String   @id @map("video_id")
+  title        String
+  views        Int
+  publish_date DateTime
+  channel_id   String   @map("channel_id")
+
+  Channel Channel   @relation(fields: [channel_id], references: [channel_id])
+  Comment Comment[]
+
+  @@index([channel_id])
+}
+
+model Channel {
+  channel_id    String  @id
+  channel_label String?
+  handle        String?
+  photo         String?
+
+  Video   Video[]
+  Comment Comment[] @relation("AuthorChannelToComment") // 追加されたリレーション
+}

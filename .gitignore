@@ -12,6 +12,7 @@ wheels/
 logs
 *.jpg
 *.jpeg
+*.png
 *.mp4
 **/comments/*.json
 **/datasource/
