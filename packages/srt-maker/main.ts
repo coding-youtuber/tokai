@@ -3,7 +3,7 @@ import * as fs from 'fs';
 const inputFile = 'input2.txt';
 const outputFile = 'output.srt';
 
-const speed = 38 / 8.2;  // 38文字で7秒
+const speed = 38 / 8.1;  // 38文字で7秒
 const startTime = { hours: 0, minutes: 4, seconds: 9, milliseconds: 10 };
 
 function timeToString(time: { hours: number, minutes: number, seconds: number, milliseconds: number }) {
