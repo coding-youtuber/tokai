@@ -14,3 +14,4 @@ logs
 *.jpeg
 *.mp4
 **/comments/*.json
+**/datasource/
