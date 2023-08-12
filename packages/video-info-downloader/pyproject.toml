@@ -1,17 +1,15 @@
 [project]
-name = "103-all-thumbnails"
+name = "video-info-downloader"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
     { name = "naoyashiga", email = "" }
 ]
 dependencies = [
-    "Pillow>=8.4.0",
-    "youtube-comment-downloader>=0.1.68",
-    "requests>=2.27.1",
+    "pytube>=15.0.0",
 ]
 readme = "README.md"
-requires-python = ">= 3.6"
+requires-python = ">= 3.10"
 
 [build-system]
 requires = ["hatchling"]
