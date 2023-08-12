@@ -2,7 +2,7 @@ import os
 import random
 import subprocess
 
-def get_random_images(img_dir, num=130):
+def get_random_images(img_dir, num=3):
     """ディレクトリ内の画像をランダムに選択する関数"""
     all_images = [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     selected_images = random.sample(all_images, num)
@@ -35,7 +35,7 @@ def concatenate_videos(video_list, output_name):
     os.remove('temp_list.txt')
 
 def main():
-    img_dir = 'images'
+    img_dir = '../datasource/thumbnail_images'
     output_video = 'output_thumbnail_video.mp4'
     temp_videos_dir = 'temp_videos'
     
