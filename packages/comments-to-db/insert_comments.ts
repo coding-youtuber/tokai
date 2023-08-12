@@ -86,7 +86,7 @@ async function processCommentsJSON(filePath: string, videoId: string) {
 }
 
 async function main() {
-  const dirPath = path.join(__dirname, '../thumbnail-comment-downloader/comments')
+  const dirPath = path.join(__dirname, '../datasource/comments')
   const files = await fs.promises.readdir(dirPath);
 
   for (let i = 0; i < files.length; i += 5) {

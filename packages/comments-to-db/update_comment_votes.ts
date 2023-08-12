@@ -32,7 +32,7 @@ async function processCommentsJSON(filePath: string, videoId: string) {
 }
 
 async function main() {
-  const dirPath = path.join(__dirname, '../thumbnail-comment-downloader/comments');
+  const dirPath = path.join(__dirname, '../datasource/comments');
   const files = await fs.promises.readdir(dirPath);
   let totalUpdateCount = 0; // 全体での更新回数をカウント
 

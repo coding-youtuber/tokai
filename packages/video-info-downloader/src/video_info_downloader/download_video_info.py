@@ -30,7 +30,7 @@ def to_model(video):
     }
 
 def main():
-    file_path = "../thumbnail-comment-downloader/output.txt"
+    file_path = "../datasource/tokai_all_video_ids.txt"
     video_ids = get_video_ids_from_file(file_path)
 
     error_video_ids = []

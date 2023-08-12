@@ -1,5 +1,5 @@
 [project]
-name = "103-all-thumbnails"
+name = "thumbnail-downloader"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
