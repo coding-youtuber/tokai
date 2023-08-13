@@ -9,7 +9,7 @@ function clearDirectory(directory: string): void {
     });
 }
 
-function renameImagesToSequentialNumbers(limit: number = 10): void {
+function renameImagesToSequentialNumbers(limit: number = 60): void {
     const imageDir = path.join(__dirname, 'images');
     const renamedImagesDir = path.join(__dirname, 'renamed_images');
 
@@ -31,16 +31,16 @@ function renameImagesToSequentialNumbers(limit: number = 10): void {
         fs.copyFileSync(oldPath, newPath);  // 画像を新しいディレクトリにコピー
     });
 }
-
 function createVideoFromImages(): void {
-    // 画像のパスと動画の出力先パス
-    const renamedImagesPath = path.join(__dirname, 'renamed_images', '%04d.png');
-    const outputPath = path.join(__dirname, 'output.mp4');
+  // 画像のパスと動画の出力先パス
+  const renamedImagesPath = path.join(__dirname, 'renamed_images', '%04d.png');
+  const outputPath = path.join(__dirname, 'output.mp4');
 
-    // ffmpegを利用して動画を作成
-    const ffmpegCommand = `ffmpeg -framerate 1/2 -i "${renamedImagesPath}" -c:v libx264 -r 30 -pix_fmt yuv420p "${outputPath}"`;
-    execSync(ffmpegCommand, { stdio: 'inherit' });
+  // ffmpegを利用して動画を作成
+  const ffmpegCommand = `ffmpeg -framerate 60 -i "${renamedImagesPath}" -c:v libx264 -r 60 -pix_fmt yuv420p "${outputPath}" -y`;
+  execSync(ffmpegCommand, { stdio: 'inherit' });
 }
 
-renameImagesToSequentialNumbers(10);  // 10枚の画像に制限
+
+renameImagesToSequentialNumbers(4064);  // 10枚の画像に制限
 createVideoFromImages();

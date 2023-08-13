@@ -19,7 +19,7 @@ async function generateCommentHTML(commentData: any, index: number): Promise<str
 
   return `
       <div style="width: 1920px; height: 1080px; font-family: Arial, sans-serif; background-color: #efefef; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-          <div style="width: 90%; margin-bottom: 20px; font-size: 240px;">No.${index.toString().padStart(4, '0')}</div>
+          <div style="width: 90%; margin-bottom: 20px; font-size: 240px;">No.${(index+1).toString().padStart(4, '0')}</div>
           <div style="width: 90%; background-color: #ffffff; padding: 30px; box-sizing: border-box; display: flex; align-items: start; border: 1px solid #ccc;">
               <img src="${commentData.AuthorChannel.photo}" alt="Profile Photo" style="width: 120px; height: 120px; border-radius: 50%; margin-right: 20px;">
               <div>
@@ -46,10 +46,10 @@ async function generateCommentHTML(commentData: any, index: number): Promise<str
 async function generateImage(commentData: any, index: number): Promise<void> {
   // Check if the image already exists
   const imagePath = path.join(__dirname, `images/${index.toString().padStart(4, '0')}_${commentData.cid}.png`);
-  if (fs.existsSync(imagePath)) {
-      console.log(`Image for comment ${index} already exists. Skipping...`);
-      return;
-  }
+  // if (fs.existsSync(imagePath)) {
+  //     console.log(`Image for comment ${index} already exists. Skipping...`);
+  //     return;
+  // }
 
   const browser = await puppeteer.launch({
     headless: "new"
@@ -71,12 +71,14 @@ async function generateImage(commentData: any, index: number): Promise<void> {
 }
 
 
-const CONCURRENCY = 4; // 並列度を4と定義
+const CONCURRENCY = 3; // 並列度を4と定義
 (async () => {
-  const resultsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'results.json'), 'utf-8')).slice(0, 8);
+  const resultsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'results.json'), 'utf-8'));
+  // const resultsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'results.json'), 'utf-8')).slice(0, 8);
   const totalComments = resultsData.length;
 
   for (let i = 0; i < totalComments; i += CONCURRENCY) {
+    if(i < 680) continue;
       const promises: Promise<void>[] = [];
 
       for (let j = 0; j < CONCURRENCY && i + j < totalComments; j++) {
