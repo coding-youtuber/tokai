@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 
-const inputFile = 'input2.txt';
-const outputFile = 'output.srt';
+const inputFile = 'test.txt';
+// const inputFile = 'input2.txt';
+const outputFile = 'testOutput.srt';
+// const outputFile = 'output.srt';
 
 const speed = 38 / 8.1;  // 38文字で7秒
-const startTime = { hours: 0, minutes: 4, seconds: 9, milliseconds: 10 };
+const startTime = { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
 
 function timeToString(time: { hours: number, minutes: number, seconds: number, milliseconds: number }) {
     return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(Math.floor(time.seconds)).padStart(2, '0')},${String(Math.floor(time.milliseconds / 10)).padStart(2, '0')}`;
